@@ -22,6 +22,9 @@ func ProcessPitchingStats(players PlayersList, result *LeagueResult) {
 	groupedMRBABIP := 0.0
 	groupedCLBABIP := 0.0
 
+	groupedSPWAR := 0.0
+	groupedMRWAR := 0.0
+
 	for _, p := range players {
 		if p.IP > 0.1 {
 			switch {
@@ -30,6 +33,7 @@ func ProcessPitchingStats(players PlayersList, result *LeagueResult) {
 				groupedSPBB9 = groupedSPBB9 + p.BB9
 				groupedSPK9 = groupedSPK9 + p.K9
 				groupedSPBABIP = groupedSPBABIP + p.BABIP
+				groupedSPWAR = groupedSPWAR + p.PWAR
 				numberOfValidSP = numberOfValidSP + 1
 				break
 			case p.POS == "MR":
@@ -37,6 +41,7 @@ func ProcessPitchingStats(players PlayersList, result *LeagueResult) {
 				groupedMRBB9 = groupedMRBB9 + p.BB9
 				groupedMRK9 = groupedMRK9 + p.K9
 				groupedMRBABIP = groupedMRBABIP + p.BABIP
+				groupedMRWAR = groupedMRWAR + p.PWAR
 				numberOfValidMR = numberOfValidMR + 1
 				break
 			case p.POS == "CL":
@@ -44,6 +49,7 @@ func ProcessPitchingStats(players PlayersList, result *LeagueResult) {
 				groupedCLBB9 = groupedCLBB9 + p.BB9
 				groupedCLK9 = groupedCLK9 + p.K9
 				groupedCLBABIP = groupedCLBABIP + p.BABIP
+				groupedMRWAR = groupedMRWAR + p.PWAR
 				numberOfValidCL = numberOfValidCL + 1
 				break
 			}
@@ -54,6 +60,7 @@ func ProcessPitchingStats(players PlayersList, result *LeagueResult) {
 	result.AverageSPBB9 = groupedSPBB9 / float64(numberOfValidSP)
 	result.AverageSPK9 = groupedSPK9 / float64(numberOfValidSP)
 	result.AverageSPBABIP = groupedSPBABIP / float64(numberOfValidSP)
+	result.AverageSPWAR = groupedSPWAR / float64(numberOfValidSP)
 
 	result.AverageMRFIP = groupedMRFIP / float64(numberOfValidMR)
 	result.AverageMRBB9 = groupedMRBB9 / float64(numberOfValidMR)
@@ -64,6 +71,8 @@ func ProcessPitchingStats(players PlayersList, result *LeagueResult) {
 	result.AverageCLBB9 = groupedCLBB9 / float64(numberOfValidCL)
 	result.AverageCLK9 = groupedCLK9 / float64(numberOfValidCL)
 	result.AverageCLBABIP = groupedCLBABIP / float64(numberOfValidCL)
+
+	result.AverageMRWAR = groupedMRWAR / float64(numberOfValidMR+numberOfValidCL)
 
 	result.AverageFIP = (groupedSPFIP + groupedMRFIP + groupedCLFIP) / float64(numberOfValidSP+numberOfValidMR+numberOfValidCL)
 	result.AverageBABIP = (groupedSPBABIP + groupedMRBABIP + groupedCLBABIP) / float64(numberOfValidSP+numberOfValidMR+numberOfValidCL)

@@ -25,7 +25,7 @@ func main() {
 
 	loadBattingSamples(battingFile)
 
-	processors := ProcessorList{ProcessAverageWOBA, ProcessPitchingStats, ProcessBattingWOBAMaps}
+	processors := ProcessorList{ProcessAverageWOBA, ProcessPitchingStats, ProcessBattingWOBAMaps, ProcessBattingWAR}
 	result := processors.Run(Players)
 
 	fmt.Println("wOBA Results")
@@ -35,6 +35,14 @@ func main() {
 	fmt.Printf(" Average wOBA: %10d\n", result.WOBAResult.AverageMark)
 	fmt.Printf("     Bad wOBA: %10d\n", result.WOBAResult.BadMark)
 	fmt.Printf("Horrible wOBA: %10d\n", result.WOBAResult.HorribleMark)
+
+	fmt.Println("\n\n")
+
+	fmt.Println("bWAR Results")
+	fmt.Println("===========================")
+	for _, v := range result.BattingWARMaps {
+		fmt.Printf("WAR: %10.2f, PLAYERS: %d\n", v.warScore, v.numberOfPlayers)
+	}
 
 	fmt.Println("\n\n")
 
@@ -69,6 +77,13 @@ func main() {
 	fmt.Printf("Average SP K/9: %10.2f\n", result.AverageSPK9)
 	fmt.Printf("Average MR K/9: %10.2f\n", result.AverageMRK9)
 	fmt.Printf("Average CL K/9: %10.2f\n", result.AverageCLK9)
+
+	fmt.Println("\n\n")
+
+	fmt.Println("PWAR Results")
+	fmt.Println("===========================")
+	fmt.Printf("Average SP WAR: %10.2f\n", result.AverageSPWAR)
+	fmt.Printf("Average MR WAR: %10.2f\n", result.AverageMRWAR)
 
 	fmt.Printf("wOBA: %#v", *(result.WOBAResult))
 }

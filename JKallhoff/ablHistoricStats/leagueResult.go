@@ -6,12 +6,13 @@ type wobaResult struct {
 }
 
 type LeagueResult struct {
-	WOBAResult                                              *wobaResult
-	BattingWOBAMaps                                         map[int64][]float64
-	AverageFIP, AverageBABIP                                float64
-	AverageSPFIP, AverageSPBB9, AverageSPK9, AverageSPBABIP float64
-	AverageMRFIP, AverageMRBB9, AverageMRK9, AverageMRBABIP float64
-	AverageCLFIP, AverageCLBB9, AverageCLK9, AverageCLBABIP float64
+	WOBAResult                                                            *wobaResult
+	BattingWOBAMaps                                                       map[int64][]float64
+	BattingWARMaps                                                        warItems
+	AverageFIP, AverageBABIP                                              float64
+	AverageSPFIP, AverageSPBB9, AverageSPK9, AverageSPBABIP, AverageSPWAR float64
+	AverageMRFIP, AverageMRBB9, AverageMRK9, AverageMRBABIP, AverageMRWAR float64
+	AverageCLFIP, AverageCLBB9, AverageCLK9, AverageCLBABIP               float64
 }
 
 func NewLeagueResult() *LeagueResult {
